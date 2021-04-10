@@ -4,24 +4,45 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private  GameObject _enemy1Prefab;
-    [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private  GameObject _enemyPrefab;
+    [SerializeField] private GameObject[] _powerups;
 
-    void Start()
+    [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private float spawnRate;
+
+    private bool _stopSpawning = false;
+
+   void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
     }
 
-    //[MEDIUM ARTICLE NOTE!!!]
-    //Do a version of this with Void instead of IEnmumerator for the GIFs!
-    public IEnumerator SpawnRoutine()
+
+    public IEnumerator SpawnEnemyRoutine()
     {
-        while (true)
+        while (!_stopSpawning)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0); //Creates/Declares the Vector3 "posToSpawn".
-            GameObject newEnemy = Instantiate(_enemy1Prefab, posToSpawn, Quaternion.identity); //Creates/Declares the "newEnemy" GameObject variable and instantiates the "_enemy1Prefab" at the transform position of "posToSpawn".
+            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity); //Creates/Declares the "newEnemy" GameObject variable and instantiates the "_enemy1Prefab" at the transform position of "posToSpawn".
             newEnemy.transform.parent = _enemyContainer.transform; //sets the transform of the "newEnemy" GameObject to be a child of "_enemyContainer'.
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(spawnRate);
         }
+    }
+
+    public IEnumerator SpawnPowerupRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0); //Creates/Declares the Vector3 "posToSpawn".
+            int randomPowerUp = Random.Range(0, 3);
+            Instantiate(_powerups[randomPowerUp], posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3, 8));
+        }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
     }
 }
