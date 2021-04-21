@@ -39,6 +39,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4209042956037569184}
     m_Modifications:
+    - target: {fileID: 4373968646053966499, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5727556864622922646, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
       propertyPath: m_Name
       value: Laser_Right
@@ -89,6 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5368490709160558393, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
+    - {fileID: 2651008728537560051, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
 --- !u!4 &5212788822538758562 stripped
 Transform:
@@ -102,6 +107,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4209042956037569184}
     m_Modifications:
+    - target: {fileID: 4373968646053966499, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
+      propertyPath: _speed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5368490709160558393, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
       propertyPath: m_Size.x
       value: 2.280663
@@ -158,7 +167,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2651008728537560051, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b3992d5f1fc42b469b6aa8122711cda, type: 3}
 --- !u!4 &3055834232334143944 stripped
 Transform:

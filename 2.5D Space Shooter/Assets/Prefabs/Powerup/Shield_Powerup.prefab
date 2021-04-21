@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8158628968161633650}
   - component: {fileID: 5729801193685343042}
   - component: {fileID: -7436443990777392197}
-  - component: {fileID: -7650602202574051137}
+  - component: {fileID: 3435648719660190989}
   m_Layer: 0
   m_Name: Shield_Powerup
   m_TagString: Untagged
@@ -142,7 +142,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.019147873}
   serializedVersion: 2
   m_Radius: 1.322329
---- !u!114 &-7650602202574051137
+--- !u!114 &3435648719660190989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,9 +151,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6213665254473948967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0f42573b756b384384ef7543b82762e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4544ec0172c37354fa45bb43003ba214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 3
   _powerupID: 2
   _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
