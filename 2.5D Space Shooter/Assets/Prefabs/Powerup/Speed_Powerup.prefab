@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3671105084993891338}
   - component: {fileID: 5870012080179594520}
   - component: {fileID: 350810018}
-  - component: {fileID: 4871809950765535635}
+  - component: {fileID: 5069728879985360912}
   m_Layer: 0
   m_Name: Speed_Powerup
   m_TagString: Untagged
@@ -142,7 +142,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4871809950765535635
+--- !u!114 &5069728879985360912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,9 +151,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2188294626901167503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0f42573b756b384384ef7543b82762e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4544ec0172c37354fa45bb43003ba214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 3
   _powerupID: 1
   _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
