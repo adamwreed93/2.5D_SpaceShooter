@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
 
+    [SerializeField] private GameObject _thruster;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
@@ -35,7 +36,8 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _audioSource = GetComponent<AudioSource>(); 
+        _audioSource = GetComponent<AudioSource>();
+        
 
         if (_spawnManager == null)
         {
@@ -61,11 +63,12 @@ public class Player : MonoBehaviour
     {
         Boundries();
         Movement();
+        Thrusters();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
-        }
+        }    
     }
 
     void Boundries()
@@ -75,6 +78,7 @@ public class Player : MonoBehaviour
         if (transform.position.x >= 11.3)
         {
             transform.position = new Vector3(-11.3f, transform.position.y, 0);
+            
         }
         else if (transform.position.x <= -11.3)
         {
@@ -175,5 +179,19 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdtaeScore(_score);
+    }
+
+    private void Thrusters()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive)
+        {
+            _thruster.transform.localScale = new Vector3(0.6f, transform.localScale.y, transform.localScale.z);
+            _speed *= 1.5f;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _thruster.transform.localScale = new Vector3(0.4f, transform.localScale.y, transform.localScale.z);
+            _speed /= 1.5f;
+        }
     }
 }
