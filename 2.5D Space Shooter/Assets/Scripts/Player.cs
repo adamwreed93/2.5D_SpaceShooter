@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    public ColorChanger _colorChanger;
 
     [SerializeField] private GameObject _thruster;
     [SerializeField] private GameObject _laserPrefab;
@@ -37,7 +38,13 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
-        
+        _colorChanger = _shieldVisualizer.GetComponent<ColorChanger>();
+
+
+        if (_colorChanger == null)
+        {
+            Debug.LogError("The _colorChanger is NULL.");
+        }
 
         if (_spawnManager == null)
         {
@@ -94,7 +101,6 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0); //Creates the Vector3 "direction" for use within this method.
 
         transform.Translate(direction * _speed * Time.deltaTime);
-        
     }
 
     void FireLaser()
@@ -119,8 +125,7 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false); 
+            _colorChanger.DamageShield();
             return;
         }
 
@@ -160,6 +165,17 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+
+        if (_colorChanger != null)
+        {
+            _colorChanger.Restoreshield();
+        }
+    }
+
+    public void DeactivateShield() //Called fromt the "ColorChange" script when shield is destroyed.
+    {
+        _isShieldActive = false; 
+        _shieldVisualizer.SetActive(false); 
     }
 
     private IEnumerator TripleShotPowerDownRoutine()

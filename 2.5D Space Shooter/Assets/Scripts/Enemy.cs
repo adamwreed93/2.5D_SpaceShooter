@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
 
+    private bool _isDead = false;
     private float _canFire;
 
     private Animator _anim;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _isDead = false;
 
         if (_player == null)
         {
@@ -53,7 +55,7 @@ public class Enemy : MonoBehaviour
 
     void FireLaser()
     {
-        if (Time.time > _canFire)
+        if (Time.time > _canFire && !_isDead)
         {
             _fireRate = Random.Range(3f, 7f);
             _canFire = Time.time + _fireRate;
@@ -80,6 +82,7 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             _moveSpeed = 0;
             _audioSource.Play();
+            _isDead = true;
             Destroy(gameObject, 2.8f);
         }
 
@@ -100,6 +103,7 @@ public class Enemy : MonoBehaviour
                 _audioSource.Play();
 
                 Destroy(GetComponent<Collider2D>());
+                _isDead = true;
                 Destroy(gameObject, 2.8f);
             }
         }  
