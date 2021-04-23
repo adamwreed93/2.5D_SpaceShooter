@@ -17,18 +17,19 @@ public class Player : MonoBehaviour
 
     private AudioSource _audioSource;
 
-
     [SerializeField] private int _score;
     [SerializeField] private int _lives = 3;
     [SerializeField] private float _speed = 0;
     [SerializeField] private float _speedMultiplier = 2;
     [SerializeField] private float _fireRate = 0;
+    [SerializeField] private int _ammoCount = 15;
 
 
     private float _canFire = -1f; //The -1 starts _canFire below 0. So long as Time.time is higher than _canFire, you can shoot!  
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
+
 
 
 
@@ -72,10 +73,10 @@ public class Player : MonoBehaviour
         Movement();
         Thrusters();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0)
         {
             FireLaser();
-        }    
+        }
     }
 
     void Boundries()
@@ -85,7 +86,7 @@ public class Player : MonoBehaviour
         if (transform.position.x >= 11.3)
         {
             transform.position = new Vector3(-11.3f, transform.position.y, 0);
-            
+
         }
         else if (transform.position.x <= -11.3)
         {
@@ -106,6 +107,8 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
+        _ammoCount--;
+        _uiManager.UpdateAmmoCount(_ammoCount);
 
         if (_isTripleShotActive)
         {
@@ -174,8 +177,8 @@ public class Player : MonoBehaviour
 
     public void DeactivateShield() //Called fromt the "ColorChange" script when shield is destroyed.
     {
-        _isShieldActive = false; 
-        _shieldVisualizer.SetActive(false); 
+        _isShieldActive = false;
+        _shieldVisualizer.SetActive(false);
     }
 
     private IEnumerator TripleShotPowerDownRoutine()
@@ -194,7 +197,19 @@ public class Player : MonoBehaviour
     public void AddScore(int points)
     {
         _score += points;
-        _uiManager.UpdtaeScore(_score);
+        _uiManager.UpdateScore(_score);
+    }
+
+    public void RefillAmmo(int ammo)
+    { 
+        _ammoCount += ammo;
+        if (_ammoCount > 15)
+        {
+            _ammoCount = 15;
+        }
+        ammo = _ammoCount;
+
+        _uiManager.UpdateAmmoCount(ammo);
     }
 
     private void Thrusters()

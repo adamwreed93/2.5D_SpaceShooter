@@ -9,6 +9,7 @@ public class Powerup : MonoBehaviour
 
     [SerializeField] private AudioClip _audioClip;
 
+    private int _ammoRefill = 15;
 
 
     void Update()
@@ -40,6 +41,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 2:
                         player.ShieldActive();
+                        break;
+                    case 3:
+                        player.RefillAmmo(_ammoRefill);
                         break;
                     default:
                         Debug.Log("Default Value");
