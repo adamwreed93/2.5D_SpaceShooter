@@ -212,6 +212,16 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmoCount(ammo);
     }
 
+    public void RestoreHealth()
+    {
+        _lives++;
+        if (_lives > 3)
+        {
+            _lives = 3;
+        }
+        _uiManager.UpdateLives(_lives);
+    }
+
     private void Thrusters()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive)
