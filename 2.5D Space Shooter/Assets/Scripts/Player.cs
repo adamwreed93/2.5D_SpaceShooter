@@ -219,6 +219,16 @@ public class Player : MonoBehaviour
         {
             _lives = 3;
         }
+
+        if (_lives == 2)
+        {
+            _rightEngine.SetActive(false);
+        }
+        else if (_lives == 3)
+        {
+            _leftEngine.SetActive(false);
+        }
+
         _uiManager.UpdateLives(_lives);
     }
 
