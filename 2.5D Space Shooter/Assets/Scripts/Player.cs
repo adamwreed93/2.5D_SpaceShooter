@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedMultiplier = 2;
     [SerializeField] private float _fireRate = 0;
     [SerializeField] private int _ammoCount = 15;
+    [SerializeField] private int _thrusterFuel = 100;
 
 
     private float _canFire = -1f; //The -1 starts _canFire below 0. So long as Time.time is higher than _canFire, you can shoot!  
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _isSuperBeamActive = false;
+    private bool _isThrusterActive = false;
 
 
 
@@ -259,15 +261,36 @@ public class Player : MonoBehaviour
 
     private void Thrusters()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive)
+        if (_thrusterFuel > 0)
         {
-            _thruster.transform.localScale = new Vector3(0.6f, transform.localScale.y, transform.localScale.z);
-            _speed *= 1.5f;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive)
+            {
+                _isThrusterActive = true;
+                _thruster.transform.localScale = new Vector3(0.6f, transform.localScale.y, transform.localScale.z); //Adds a little bit of a visual prompt to the thruster.
+                _speed *= 1.75f;
+                StartCoroutine(DrainThrusterFuel());
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift) || _thrusterFuel == 0)
+            {
+                _isThrusterActive = false;
+                _thruster.transform.localScale = new Vector3(0.4f, transform.localScale.y, transform.localScale.z); //Removes the visual prompt from the thruster.
+                _speed /= 1.75f;
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+    }
+
+    private IEnumerator DrainThrusterFuel()
+    {
+        while (_isThrusterActive && _thrusterFuel > 0)
         {
-            _thruster.transform.localScale = new Vector3(0.4f, transform.localScale.y, transform.localScale.z);
-            _speed /= 1.5f;
+            _thrusterFuel--;
+            _uiManager.UpdateFuelGuage(_thrusterFuel);
+            yield return new WaitForSeconds(.05f);
+
+            if (!_isThrusterActive)
+            {
+                break;
+            }
         }
     }
 }
