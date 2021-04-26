@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     public ColorChanger _colorChanger;
     public BoxCollider2D superBeamCollider;
+    public CameraShake cameraShake;
 
     [SerializeField] private GameObject _thruster;
     [SerializeField] private GameObject _laserPrefab;
@@ -140,6 +141,7 @@ public class Player : MonoBehaviour
             return;
         }
 
+        StartCoroutine(cameraShake.Shake(.15f, .4f));
         _lives--;
 
         _uiManager.UpdateLives(_lives);
