@@ -200,28 +200,16 @@ public class Player : MonoBehaviour
 
     private IEnumerator SuperBeamPowerDownRoutine()
     {
-        Debug.Log("Checkpoint 1");
         _superBeamPrefab.SetActive(true);
         _superBeamAnimator.SetBool("SuperBeamActive", true);
         _isSuperBeamActive = true;
-
-        _canFire = Time.time + _fireRate;
-
-        float increaseRate = 0;
-        float colliderIncreaseTime = Time.time + increaseRate;
-
-        for (int i = 0; i > 300; i++ )
-        {
-            superBeamCollider.size = new Vector3(0, colliderIncreaseTime, 0);
-            yield return new WaitForSeconds(.1f);
-            i++;
-        }
-        yield return new WaitForSeconds(5.0f);
+        superBeamCollider.offset = new Vector3(0, 2.5f, 0);
+        yield return new WaitForSeconds(3.0f);
         _superBeamAnimator.SetBool("SuperBeamActive", false);
         yield return new WaitForSeconds(1.0f);
+        superBeamCollider.offset = new Vector3(0, 0, 0);
         _isSuperBeamActive = false;
         _superBeamPrefab.SetActive(false);
-
     }
 
     private IEnumerator SpeedPowerDownRoutine()
