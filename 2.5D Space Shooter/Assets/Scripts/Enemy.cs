@@ -106,6 +106,22 @@ public class Enemy : MonoBehaviour
                 _isDead = true;
                 Destroy(gameObject, 2.8f);
             }
-        }  
+        }
+
+        if (other.tag == "SuperBeam")
+        {
+            if (_player != null)
+            {
+                _player.AddScore(_pointValue);
+            }
+
+            _anim.SetTrigger("OnEnemyDeath");
+            _moveSpeed = 0;
+            _audioSource.Play();
+
+            Destroy(GetComponent<Collider2D>());
+            _isDead = true;
+            Destroy(gameObject, 2.8f);
+        }
     }
 }

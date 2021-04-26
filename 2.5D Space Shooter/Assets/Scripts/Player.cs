@@ -7,13 +7,16 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
     public ColorChanger _colorChanger;
+    public BoxCollider2D superBeamCollider;
 
     [SerializeField] private GameObject _thruster;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _superBeamPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngine, _rightEngine; //Similar references like this can be written like this but you hjave to be careful. This is more ofr organizational purposes.
     [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private Animator _superBeamAnimator;
 
     private AudioSource _audioSource;
 
@@ -29,6 +32,7 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
+    private bool _isSuperBeamActive = false;
 
 
 
@@ -40,6 +44,8 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _colorChanger = _shieldVisualizer.GetComponent<ColorChanger>();
+        superBeamCollider = _superBeamPrefab.GetComponent<BoxCollider2D>();
+        _superBeamAnimator = _superBeamPrefab.GetComponent<Animator>();
 
 
         if (_colorChanger == null)
@@ -73,7 +79,7 @@ public class Player : MonoBehaviour
         Movement();
         Thrusters();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0 && !_isSuperBeamActive)
         {
             FireLaser();
         }
@@ -157,6 +163,11 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
+    public void SuperBeamActive()
+    {
+        StartCoroutine(SuperBeamPowerDownRoutine());
+    }
+
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
@@ -185,6 +196,32 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false;
+    }
+
+    private IEnumerator SuperBeamPowerDownRoutine()
+    {
+        Debug.Log("Checkpoint 1");
+        _superBeamPrefab.SetActive(true);
+        _superBeamAnimator.SetBool("SuperBeamActive", true);
+        _isSuperBeamActive = true;
+
+        _canFire = Time.time + _fireRate;
+
+        float increaseRate = 0;
+        float colliderIncreaseTime = Time.time + increaseRate;
+
+        for (int i = 0; i > 300; i++ )
+        {
+            superBeamCollider.size = new Vector3(0, colliderIncreaseTime, 0);
+            yield return new WaitForSeconds(.1f);
+            i++;
+        }
+        yield return new WaitForSeconds(5.0f);
+        _superBeamAnimator.SetBool("SuperBeamActive", false);
+        yield return new WaitForSeconds(1.0f);
+        _isSuperBeamActive = false;
+        _superBeamPrefab.SetActive(false);
+
     }
 
     private IEnumerator SpeedPowerDownRoutine()
