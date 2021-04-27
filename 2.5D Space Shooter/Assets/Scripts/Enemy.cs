@@ -9,20 +9,29 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
 
+    [SerializeField] private float _movementType; 
     private bool _isDead = false;
     private float _canFire;
+    private bool _canStartCoroutine = true;
+    [SerializeField] private float _movementDirection;
 
     private Animator _anim;
     private Player _player;
     private AudioSource _audioSource;
 
+    private void Awake()
+    {
+        _movementType = Random.Range(0, 2);
+    }
 
-    private void Start()
+        private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _isDead = false;
+
+        StartCoroutine(ChangeDirection());
 
         if (_player == null)
         {
@@ -44,16 +53,70 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.down * _moveSpeed * Time.deltaTime);
-
-        if (transform.position.y <= -5f)
+        if (_movementType == 0)
         {
-            float randomX = Random.Range(-8f, 8f);
-            transform.position = new Vector3(randomX, 7, 0);
+            transform.Translate(Vector3.down * _moveSpeed * Time.deltaTime);
+
+            if (transform.position.y <= -5f)
+            {
+                float randomX = Random.Range(-8f, 8f);
+                transform.position = new Vector3(randomX, 7, 0);
+            }
+        }
+        
+        if (_movementType == 1)
+        {
+            if (_canStartCoroutine)
+            {
+                _canStartCoroutine = false;
+                StartCoroutine(DirectHorizontalMovement());
+            }
+
+            if (_movementDirection == 0)
+            {
+                transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
+            }
+            else if (_movementDirection == 1)
+            {
+                transform.Translate(Vector3.left * _moveSpeed * Time.deltaTime);
+            }
+
+            if (transform.position.x >= 11)
+            {
+                transform.position = new Vector3(-11, transform.position.y, 0);
+            }
+            else if (transform.position.x <= -11)
+            {
+                transform.position = new Vector3(11, transform.position.y, 0);
+            }
         }
     }
 
-    void FireLaser()
+    private IEnumerator DirectHorizontalMovement()
+    {
+        _movementDirection = Random.Range(0, 2);
+
+        while (_movementType == 1)
+        {
+            yield return new WaitForSeconds(3.0f);
+            _movementDirection = Random.Range(0, 2);
+        }
+        _canStartCoroutine = true;
+    }
+
+    private IEnumerator ChangeDirection()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3.0f);
+            if (transform.position.y >= -0.75f)
+            {
+                _movementType = Random.Range(0, 2);
+            }
+        }
+    }
+
+        void FireLaser()
     {
         if (Time.time > _canFire && !_isDead)
         {
