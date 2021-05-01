@@ -54,9 +54,6 @@ public class EnemyMissileLauncher : MonoBehaviour
                 StartCoroutine(FireMissiles());
             }
         }
-
-
-
     }
 
     void CalculateMovement()

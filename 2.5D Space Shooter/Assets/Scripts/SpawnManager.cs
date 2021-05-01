@@ -31,7 +31,7 @@ public class SpawnManager : MonoBehaviour
         if (_waveNumber > 2 && !_spawnedMissileEnemies)
         {
             int random = Random.Range(0, 4);
-            if (random >= 2)
+            if (random >= 3)
             {
                 _spawnedMissileEnemies = true;
                 StartCoroutine(SpawnMissileEnemyRoutine());
@@ -41,13 +41,13 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnBasicEnemyRoutine()
     {
-        yield return new WaitForSeconds(1.0f); //Gives an inital delay before spawning waves.
+        yield return new WaitForSeconds(2.0f); //Gives an inital delay before spawning waves.
 
         while (!_stopSpawning)
         {
             for (int i = 0; i < _basicEnemiesSpawnCount; i++)
             {
-                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 8, 0);
                 GameObject newEnemy = Instantiate(_basicEnemyPrefab, posToSpawn, Quaternion.identity);
                 newEnemy.transform.parent = _enemyContainer.transform;
                 yield return new WaitForSeconds(spawnRate);
@@ -59,14 +59,14 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnMissileEnemyRoutine()
     {
-        yield return new WaitForSeconds(1.0f); //Gives an inital delay before spawning waves.
+        yield return new WaitForSeconds(2.0f); //Gives an inital delay before spawning waves.
 
         while (!_stopSpawning)
         {
             for (int i = 0; i < _missileEnemiesSpawnCount; i++)
             {
                 float randomY = Random.Range(1.5f, 5.5f);
-                Vector3 posToSpawn = new Vector3(randomY, -11, 0);
+                Vector3 posToSpawn = new Vector3(-11, randomY, 0);
                 GameObject newEnemy = Instantiate(_missileLauncherEnemyPrefab, posToSpawn, Quaternion.identity);
                 newEnemy.transform.parent = _enemyContainer.transform;
                 yield return new WaitForSeconds(spawnRate);

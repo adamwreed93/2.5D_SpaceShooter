@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
 
-    private float _movementType; 
+    private float _movementType = 0; 
     private bool _isDead = false;
     private float _canFire;
     private bool _canStartCoroutine = true;
@@ -19,10 +19,6 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private AudioSource _audioSource;
 
-    private void Awake()
-    {
-        _movementType = Random.Range(0, 2);
-    }
 
     private void Start()
     {
@@ -109,7 +105,7 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3.0f);
-            if (transform.position.y >= -0.75f)
+            if (transform.position.y >= -0.75f && transform.position.y <= 5.5f)
             {
                 _movementType = Random.Range(0, 2);
             }
