@@ -1028,7 +1028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec04279747be07748860b9de804e1b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5952997895265763744, guid: e6f04e2196edac549b48d741a29214bb, type: 3}
+  _basicEnemyPrefab: {fileID: 5952997895265763744, guid: e6f04e2196edac549b48d741a29214bb, type: 3}
+  _missileLauncherEnemyPrefab: {fileID: 4050901161877201896, guid: d31e091bdde00b84faac5139b16fb6f2, type: 3}
   _powerups:
   - {fileID: 6396118943573684553, guid: c2e858d216d504a428a8d7fed93190a9, type: 3}
   - {fileID: 2188294626901167503, guid: d50be29b39054a74fadf31c8a1533b32, type: 3}
@@ -1036,6 +1037,7 @@ MonoBehaviour:
   - {fileID: 8038585536794787452, guid: a967b923968b70f43bcce67ef02475d0, type: 3}
   - {fileID: 800029713060934098, guid: 4be3c322eb47cb543acf4c2b252113c9, type: 3}
   - {fileID: 3871697389124250063, guid: 3d47d1d2239683e41834f9993c0871bc, type: 3}
+  - {fileID: 7033675734070212203, guid: 669f218b656f2644faaa23f359460ebd, type: 3}
   _enemyContainer: {fileID: 454391155}
   spawnRate: 1
   _newWaveText: {fileID: 549853486}
@@ -2202,7 +2204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1891002243
 MonoBehaviour:
   m_ObjectHideFlags: 0

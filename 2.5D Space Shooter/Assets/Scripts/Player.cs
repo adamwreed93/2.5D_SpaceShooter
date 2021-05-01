@@ -36,12 +36,16 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     private bool _isSuperBeamActive = false;
     private bool _isThrusterActive = false;
+    private bool _isNegaShroomActive = false;
+    private float _defaultSpeed;
+    
 
 
 
 
     void Start()
     {
+        _defaultSpeed = _speed;
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -175,7 +179,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
-        _speed *= _speedMultiplier;
+        _speed = (_defaultSpeed * _speedMultiplier);
         StartCoroutine(SpeedPowerDownRoutine());
     }
 
@@ -220,7 +224,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isSpeedBoostActive = false;
-        _speed /= _speedMultiplier;
+        _speed = _defaultSpeed;
     }
 
     public void AddScore(int points)
@@ -261,22 +265,37 @@ public class Player : MonoBehaviour
         _uiManager.UpdateLives(_lives);
     }
 
+    public void NegaShroomActive()
+    {
+        _isNegaShroomActive = true;
+        _speed = (_defaultSpeed / _speedMultiplier);
+        StartCoroutine(NegaShroomActivePowerDownRoutine());
+        
+    }
+
+    private IEnumerator NegaShroomActivePowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isNegaShroomActive = false;
+        _speed = _defaultSpeed;
+    }
+
     private void Thrusters()
     {
         if (_thrusterFuel > 0)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSpeedBoostActive && !_isNegaShroomActive)
             {
                 _isThrusterActive = true;
                 _thruster.transform.localScale = new Vector3(0.6f, transform.localScale.y, transform.localScale.z); //Adds a little bit of a visual prompt to the thruster.
-                _speed *= 1.75f;
+                _speed = (_defaultSpeed * 1.75f);
                 StartCoroutine(DrainThrusterFuel());
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift) || _thrusterFuel == 0)
+            else if (Input.GetKeyUp(KeyCode.LeftShift) && !_isSpeedBoostActive && !_isNegaShroomActive || _thrusterFuel == 0 && !_isSpeedBoostActive && !_isNegaShroomActive)
             {
                 _isThrusterActive = false;
                 _thruster.transform.localScale = new Vector3(0.4f, transform.localScale.y, transform.localScale.z); //Removes the visual prompt from the thruster.
-                _speed /= 1.75f;
+                _speed = _defaultSpeed;
             }
         }
     }

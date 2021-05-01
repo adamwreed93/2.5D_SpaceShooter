@@ -9,11 +9,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
 
-    [SerializeField] private float _movementType; 
+    private float _movementType; 
     private bool _isDead = false;
     private float _canFire;
     private bool _canStartCoroutine = true;
-    [SerializeField] private float _movementDirection;
+    private float _movementDirection;
 
     private Animator _anim;
     private Player _player;
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
         _movementType = Random.Range(0, 2);
     }
 
-        private void Start()
+    private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();

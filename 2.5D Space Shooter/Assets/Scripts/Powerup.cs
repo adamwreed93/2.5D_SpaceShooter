@@ -51,6 +51,9 @@ public class Powerup : MonoBehaviour
                     case 5:
                         player.SuperBeamActive();
                         break;
+                    case 6:
+                        player.NegaShroomActive();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;
