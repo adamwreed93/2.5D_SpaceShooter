@@ -8,12 +8,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _pointValue = 10;
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
+    [SerializeField] private GameObject _enemyShieldVisualizer;
 
     private float _movementType = 0; 
     private bool _isDead = false;
     private float _canFire;
     private bool _canStartCoroutine = true;
     private float _movementDirection;
+    private bool _enemyShieldActive = false;
 
     private Animator _anim;
     private Player _player;
@@ -28,6 +30,10 @@ public class Enemy : MonoBehaviour
         _isDead = false;
 
         StartCoroutine(ChangeDirection());
+        CheckForShield();
+
+
+
 
         if (_player == null)
         {
@@ -88,6 +94,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void CheckForShield()
+    {
+        int randomNumber = Random.Range(0, 6);
+
+        if (randomNumber == 1)
+        {
+            ActivateEnemyShields();
+        }
+    }
+
+    public void ActivateEnemyShields()
+    {
+        _enemyShieldActive = true;
+        _enemyShieldVisualizer.SetActive(true);
+    }
+
     private IEnumerator DirectHorizontalMovement()
     {
         _movementDirection = Random.Range(0, 2);
@@ -134,6 +156,18 @@ public class Enemy : MonoBehaviour
         {
             Player player = other.transform.GetComponent<Player>();
 
+            if (_enemyShieldActive)
+            {
+                if (player != null)
+                {
+                    other.transform.GetComponent<Player>().Damage();
+                }
+
+                _enemyShieldActive = false;
+                _enemyShieldVisualizer.SetActive(false);
+                return;
+            }
+
             if (player != null)
             {
                 other.transform.GetComponent<Player>().Damage();
@@ -148,6 +182,17 @@ public class Enemy : MonoBehaviour
         if (other.tag == "Laser")
         {
             Laser lasers = other.transform.GetComponentInChildren<Laser>();
+
+            if (!lasers._isEnemyLaser)
+            {
+                if (_enemyShieldActive)
+                {
+                    Destroy(other.gameObject);
+                    _enemyShieldActive = false;
+                    _enemyShieldVisualizer.SetActive(false);
+                    return;
+                }
+            }
 
             if (!lasers._isEnemyLaser)
             {

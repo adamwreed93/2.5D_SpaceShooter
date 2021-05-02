@@ -53,15 +53,12 @@ public class SpawnManager : MonoBehaviour
             {
                 case int n when (n <= 60):
                     commonPowerupUpSpawn();
-                    Debug.Log("You rolled " + _randomPowerup);
                     break;
                 case int n when (n >= 61 && n <= 90):
                     uncommonPowerupUpSpawn();
-                    Debug.Log("You rolled " + _randomPowerup);
                     break;
                 case int n when (n >= 91 && n <= 100):
                     rarePowerupUpSpawn();
-                    Debug.Log("You rolled " + _randomPowerup);
                     break;
             }
 
@@ -104,7 +101,6 @@ public class SpawnManager : MonoBehaviour
             _basicEnemiesSpawnCount += 2;
             break;
         }
-        
     }
 
     public IEnumerator SpawnMissileEnemyRoutine()
@@ -136,7 +132,6 @@ public class SpawnManager : MonoBehaviour
         _stopSpawning = true;
         StartCoroutine(StartNewWave());
     }
-
 
     private IEnumerator StartNewWave()
     {
@@ -170,7 +165,6 @@ public class SpawnManager : MonoBehaviour
         _spawnedMissileEnemies = false;
         StartSpawning();
     }
-
 
     private IEnumerator TextFlicker()
     {
