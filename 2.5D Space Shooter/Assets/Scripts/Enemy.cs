@@ -205,7 +205,6 @@ public class Enemy : MonoBehaviour
                 Destroy(other.gameObject);
                 _moveSpeed = 0;
                 _audioSource.Play();
-
                 Destroy(GetComponent<Collider2D>());
                 _isDead = true;
                 Destroy(gameObject, 2.8f);

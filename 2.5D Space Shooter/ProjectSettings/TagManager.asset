@@ -9,6 +9,8 @@ TagManager:
   - Shield
   - SuperBeam
   - HeatSeeker
+  - HammerheadRange
+  - Enemy_Hammerhead
   layers:
   - Default
   - TransparentFX

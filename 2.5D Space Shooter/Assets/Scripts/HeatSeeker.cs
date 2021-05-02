@@ -42,6 +42,12 @@ public class HeatSeeker : MonoBehaviour
             Instantiate(miniExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
+
+        if (other.tag == "SuperBeam")
+        {
+            Instantiate(miniExplosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
     }
 
     private IEnumerator TimedDetonation()
