@@ -34,25 +34,27 @@ public class Powerup : MonoBehaviour
                 switch(_powerupID)    
                 {
                     case 0:
-                        player.TripleShotActive();
+                        player.TripleShotActive(); //Common Spawn
                         break;
                     case 1:
-                        player.SpeedBoostActive();
+                        player.SpeedBoostActive(); //Common Spawn
                         break;
                     case 2:
-                        player.ShieldActive();
+                        player.RefillAmmo(_ammoRefill); //Common Spawn
                         break;
+                 /////////////////////////////////////////////////////////////////////////
                     case 3:
-                        player.RefillAmmo(_ammoRefill);
-                        break;
+                        player.ShieldActive(); //Uncommon Spawn
+                        break; 
                     case 4:
-                        player.RestoreHealth();
+                        player.RestoreHealth(); //Uncommon Spawn
                         break;
                     case 5:
-                        player.SuperBeamActive();
+                        player.NegaShroomActive(); //Uncommon Spawn
                         break;
+                 ///////////////////////////////////////////////////////////////////////
                     case 6:
-                        player.NegaShroomActive();
+                        player.SuperBeamActive(); //Rare Spawn
                         break;
                     default:
                         Debug.Log("Default Value");

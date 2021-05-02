@@ -19,7 +19,10 @@ public class SpawnManager : MonoBehaviour
     private int _missileEnemiesSpawnCount = 1;
     private bool _stopSpawning = false;
     private int _waveNumber = 1; //This will eventually need to be put into the UI as an image.
-    private bool _spawnedMissileEnemies = false; 
+    private bool _spawnedMissileEnemies = false;
+
+    private int _randomPowerup;
+    private int randomPowerupID;
 
 
     public void StartSpawning() //Called when you shoot the asteroid.
@@ -39,6 +42,52 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    public IEnumerator SpawnPowerupRoutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        while (!_stopSpawning)
+        {
+            _randomPowerup = Random.Range(1, 101);
+            switch (_randomPowerup)
+            {
+                case int n when (n <= 60):
+                    commonPowerupUpSpawn();
+                    Debug.Log("You rolled " + _randomPowerup);
+                    break;
+                case int n when (n >= 61 && n <= 90):
+                    uncommonPowerupUpSpawn();
+                    Debug.Log("You rolled " + _randomPowerup);
+                    break;
+                case int n when (n >= 91 && n <= 100):
+                    rarePowerupUpSpawn();
+                    Debug.Log("You rolled " + _randomPowerup);
+                    break;
+            }
+
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 8, 0); //Creates/Declares the Vector3 "posToSpawn".
+            Instantiate(_powerups[randomPowerupID], posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3, 8));
+        }
+    }
+
+    private void commonPowerupUpSpawn() //60% Chance To Spawn
+    {
+        randomPowerupID = Random.Range(0, 2);
+    }
+
+    private void uncommonPowerupUpSpawn() //30% Chance To Spawn
+    {
+        randomPowerupID = Random.Range(3, 5);
+    }
+
+    private void rarePowerupUpSpawn() //10% Chance To Spawn
+    {
+        randomPowerupID = 6;
+        //randomPowerupID = Random.Range(7, 7);
+    }
+
+
     public IEnumerator SpawnBasicEnemyRoutine()
     {
         yield return new WaitForSeconds(2.0f); //Gives an inital delay before spawning waves.
@@ -52,6 +101,7 @@ public class SpawnManager : MonoBehaviour
                 newEnemy.transform.parent = _enemyContainer.transform;
                 yield return new WaitForSeconds(spawnRate);
             }
+            _basicEnemiesSpawnCount += 2;
             break;
         }
         
@@ -90,7 +140,6 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator StartNewWave()
     {
-        _basicEnemiesSpawnCount += 2;
         _waveNumber++;
         int waitTime = 4;
 
@@ -122,18 +171,6 @@ public class SpawnManager : MonoBehaviour
         StartSpawning();
     }
 
-    public IEnumerator SpawnPowerupRoutine()
-    {
-        yield return new WaitForSeconds(3.0f);
-
-        while (!_stopSpawning)
-        {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0); //Creates/Declares the Vector3 "posToSpawn".
-            int randomPowerUp = Random.Range(0, 7); //Created the int "randomPowerUp" to be used to represent a random PowerupID. [IMPORTANT!] This random range must be changed to match the number of different powerups.
-            Instantiate(_powerups[randomPowerUp], posToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3, 8));
-        }
-    }
 
     private IEnumerator TextFlicker()
     {

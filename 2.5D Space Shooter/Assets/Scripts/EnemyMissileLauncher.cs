@@ -70,12 +70,12 @@ public class EnemyMissileLauncher : MonoBehaviour
 
     private IEnumerator FireMissiles()
     {
-        int numberOfMissiles = Random.Range(1, 4);
+        int numberOfMissiles = Random.Range(4, 5);
 
         for (int i = 0; i < numberOfMissiles; i++) 
         {
             Instantiate(_HeatSeekingMissilePrefab, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1f);
         }
         _stopMoving = false;
 
