@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
             if (transform.position.y <= -5f)
             {
                 float randomX = Random.Range(-8f, 8f);
-                transform.position = new Vector3(randomX, 7, 0);
+                transform.position = new Vector3(randomX, 8, 0);
             }
         }
         
@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-        void FireLaser()
+    void FireLaser()
     {
         if (Time.time > _canFire && !_isDead)
         {

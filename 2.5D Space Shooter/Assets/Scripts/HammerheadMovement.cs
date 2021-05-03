@@ -12,7 +12,7 @@ public class HammerheadMovement : MonoBehaviour
     private Player _player;
     private Transform target;
 
-    public GameObject explosionPrefab;
+    [SerializeField] private GameObject explosionPrefab;
 
 
     private void Start()

@@ -67,7 +67,7 @@ public class EnemyMissileLauncher : MonoBehaviour
 
     private IEnumerator FireMissiles()
     {
-        int numberOfMissiles = Random.Range(4, 5);
+        int numberOfMissiles = Random.Range(2, 5);
 
         for (int i = 0; i < numberOfMissiles; i++) 
         {

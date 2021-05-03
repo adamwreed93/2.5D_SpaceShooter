@@ -7,17 +7,22 @@ public class Laser : MonoBehaviour
     [SerializeField] private float _speed = 0;
 
     public bool _isEnemyLaser = false;
+    public bool _isStealthEnemyLaser = false;
 
 
     void Update()
     {
-        if (_isEnemyLaser == false)
+        if (!_isEnemyLaser)
         {
             MoveUp();
         }
-        else
+        else if (_isEnemyLaser && !_isStealthEnemyLaser)
         {
             MoveDown();
+        }
+        else if (_isStealthEnemyLaser && _isEnemyLaser)
+        {
+            MoveUp();
         }
 
         Destroy(gameObject, 2);
@@ -55,6 +60,12 @@ public class Laser : MonoBehaviour
     public void AssignEnemyLaser()
     {
         _isEnemyLaser = true;
+    }
+
+    public void AssignStealthEnemyLaser()
+    {
+        _isEnemyLaser = true;
+        _isStealthEnemyLaser = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

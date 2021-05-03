@@ -8,6 +8,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _basicEnemyPrefab;
     [SerializeField] private GameObject _missileLauncherEnemyPrefab;
     [SerializeField] private GameObject _hammerheadEnemyPrefab;
+    [SerializeField] private GameObject _stealthEnemyPrefab;
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private float spawnRate;
@@ -19,10 +20,12 @@ public class SpawnManager : MonoBehaviour
     private int _basicEnemiesSpawnCount = 5; //The first wave starts with 5 enemies.
     private int _missileEnemiesSpawnCount = 1;
     private int _hammerheadEnemiesSpawnCount = 1;
+    private int _stealthEnemiesSpawnCount = 1;
     private bool _stopSpawning = false;
     private int _waveNumber = 1; //This will eventually need to be put into the UI as an image.
     private bool _spawnedMissileEnemies = false;
     private bool _spawnedHammerheadEnemies = false;
+    private bool _spawnedStealthEnemies = false;
 
     private int _randomPowerup;
     private int randomPowerupID;
@@ -44,13 +47,23 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (_waveNumber > 2 && !_spawnedHammerheadEnemies) //If you don't chack for _spawnedMissileEnemies then it will always spawn them.
+        if (_waveNumber > 2 && !_spawnedHammerheadEnemies) //If you don't chack for _spawnedHammerheadEnemies then it will always spawn them.
         {
             int random = Random.Range(0, 4);
             if (random >= 2)
             {
                 _spawnedHammerheadEnemies = true;
                 StartCoroutine(SpawnHammerheadEnemyRoutine());
+            }
+        }
+
+        if (_waveNumber > 3 && !_spawnedStealthEnemies) //If you don't chack for _spawnedStealthEnemies then it will always spawn them.
+        {
+            int random = Random.Range(0, 4);
+            if (random >= 2)
+            {
+                _spawnedStealthEnemies = true;
+                StartCoroutine(SpawnStealthEnemyRoutine());
             }
         }
     }
@@ -149,6 +162,24 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnRate);
             }
             _hammerheadEnemiesSpawnCount++;
+            break;
+        }
+    }
+
+    public IEnumerator SpawnStealthEnemyRoutine()
+    {
+        yield return new WaitForSeconds(2.0f); //Gives an inital delay before spawning waves.
+
+        while (!_stopSpawning)
+        {
+            for (int i = 0; i < _stealthEnemiesSpawnCount; i++)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 8, 0);
+                GameObject newEnemy = Instantiate(_stealthEnemyPrefab, posToSpawn, Quaternion.identity);
+                newEnemy.transform.parent = _enemyContainer.transform;
+                yield return new WaitForSeconds(spawnRate);
+            }
+            _stealthEnemiesSpawnCount++;
             break;
         }
     }
