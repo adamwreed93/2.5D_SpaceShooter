@@ -7,7 +7,7 @@ public class HammerheadMovement : MonoBehaviour
     private EnemyHammerhead _enemyHammerhead;
 
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private int _pointValue = 10;
+
 
     private AudioSource _audioSource;
     private Player _player;
@@ -65,42 +65,6 @@ public class HammerheadMovement : MonoBehaviour
         {
             _enemyHammerhead.WithinRange();
         }
-
-        if (other.tag == "Laser")
-        {
-            Laser lasers = other.transform.GetComponentInChildren<Laser>();
-
-            if (!lasers._isEnemyLaser)
-            {
-                if (_player != null)
-                {
-                    _player.AddScore(_pointValue);
-                }
-
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                Destroy(other.gameObject);
-                _moveSpeed = 0;
-                _audioSource.Play();
-                Destroy(GetComponent<Collider2D>());
-                Destroy(transform.GetChild(0).gameObject);
-                Destroy(gameObject, 2.8f);
-            }
-        }
-
-        if (other.tag == "SuperBeam")
-        {
-            if (_player != null)
-            {
-                _player.AddScore(_pointValue);
-            }
-
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            _moveSpeed = 0;
-            _audioSource.Play();
-            Destroy(transform.GetChild(0).gameObject);
-            Destroy(GetComponent<Collider2D>());
-            Destroy(gameObject, 2.8f);
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -113,6 +77,26 @@ public class HammerheadMovement : MonoBehaviour
     }
 
     public void KilledByPlayer()
+    {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        _moveSpeed = 0;
+        _audioSource.Play();
+        Destroy(transform.GetChild(0).gameObject);
+        Destroy(GetComponent<Collider2D>());
+        Destroy(gameObject, 2.8f);
+    }
+
+    public void TouchedLaser()
+    {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        _moveSpeed = 0;
+        _audioSource.Play();
+        Destroy(GetComponent<Collider2D>());
+        Destroy(transform.GetChild(0).gameObject);
+        Destroy(gameObject, 2.8f);
+    }
+
+    public void TouchedSuperBeam()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         _moveSpeed = 0;

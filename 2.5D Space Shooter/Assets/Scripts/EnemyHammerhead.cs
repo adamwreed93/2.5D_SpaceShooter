@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyHammerhead : MonoBehaviour
 {
-    private Player _player;
-    public bool _isWithinRange = false;
+    HammerheadMovement hammerheadMovement;
 
     [SerializeField] private GameObject _enemyHammerheadPrefab;
-    HammerheadMovement hammerheadMovement;
+    [SerializeField] private int _pointValue = 10;
+
+    private Player _player;
+
+    public bool _isWithinRange = false;
 
 
     private void Start()
@@ -39,6 +42,31 @@ public class EnemyHammerhead : MonoBehaviour
         {
             _player.Damage();
             hammerheadMovement.KilledByPlayer();
+        }
+
+        if (other.tag == "Laser")
+        {
+            Laser lasers = other.transform.GetComponentInChildren<Laser>();
+
+            if (!lasers._isEnemyLaser)
+            {
+                if (_player != null)
+                {
+                    _player.AddScore(_pointValue);
+                }
+                Destroy(other.gameObject);
+                hammerheadMovement.TouchedLaser();
+            }
+
+
+            if (other.tag == "SuperBeam")
+            {
+                if (_player != null)
+                {
+                    _player.AddScore(_pointValue);
+                }
+                hammerheadMovement.TouchedSuperBeam();
+            }
         }
     }
 }
