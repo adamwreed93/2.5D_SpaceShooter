@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class HammerheadMovement : MonoBehaviour
 {
-    private EnemyHammerhead _enemyHammerhead;
-
+    [SerializeField] private GameObject _EnemyHammerheadGFX;
     [SerializeField] private float _moveSpeed;
 
-
+    private EnemyHammerhead _enemyHammerhead;
     private AudioSource _audioSource;
     private Player _player;
     private Transform target;
@@ -18,11 +17,10 @@ public class HammerheadMovement : MonoBehaviour
 
     private void Start()
     {
+        _enemyHammerhead = _EnemyHammerheadGFX.GetComponent<EnemyHammerhead>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        _enemyHammerhead = GameObject.FindGameObjectWithTag("Enemy_Hammerhead").GetComponent<EnemyHammerhead>();
         _audioSource = GetComponent<AudioSource>();
         target = _player.transform;
-
 
         if (_player == null)
         {

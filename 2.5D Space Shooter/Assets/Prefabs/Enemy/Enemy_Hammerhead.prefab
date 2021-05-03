@@ -180,8 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220fbcf520f7a9a4685879da8f02896e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _EnemyHammerheadGFX: {fileID: 5151042402999383750}
   _moveSpeed: 2
-  _pointValue: 10
   explosionPrefab: {fileID: 3704474712665167732, guid: e055c062429d5a24c95922a4c19b544f, type: 3}
 --- !u!1 &5151042402999383750
 GameObject:
@@ -320,6 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e82a451a23ad784d99cebaa769b0320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyHammerheadPrefab: {fileID: 3107391355016168927}
+  _pointValue: 10
   _isWithinRange: 0
 --- !u!1 &7879205495629551603
 GameObject:

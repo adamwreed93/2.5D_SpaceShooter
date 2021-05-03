@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHammerhead : MonoBehaviour
 {
-    HammerheadMovement hammerheadMovement;
+    private HammerheadMovement hammerheadMovement;
 
     [SerializeField] private GameObject _enemyHammerheadPrefab;
     [SerializeField] private int _pointValue = 10;
@@ -33,7 +33,7 @@ public class EnemyHammerhead : MonoBehaviour
     public void NotWithinRange()
     {
         _isWithinRange = false;
-        transform.Rotate(0.0f, 0.0f, -90.0f, Space.World);
+        //transform.Rotate(0.0f, 0.0f, -90.0f, Space.World);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
