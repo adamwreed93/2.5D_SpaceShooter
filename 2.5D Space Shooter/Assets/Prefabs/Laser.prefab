@@ -145,4 +145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 20
+  miniExplosionPrefab: {fileID: 6982445704510370719, guid: 0a96a71177af3d04aa800f645e698fed, type: 3}
   _isEnemyLaser: 0
+  _isStealthEnemyLaser: 0

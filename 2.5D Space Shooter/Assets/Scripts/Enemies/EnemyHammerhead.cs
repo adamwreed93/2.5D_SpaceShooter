@@ -11,7 +11,7 @@ public class EnemyHammerhead : MonoBehaviour
 
     private Player _player;
 
-    public bool _isWithinRange = false;
+   
 
 
     private void Start()
@@ -24,16 +24,9 @@ public class EnemyHammerhead : MonoBehaviour
             Debug.LogError("The Player is NULL.");
         }
     }
-    public void WithinRange()
-    {
-        _isWithinRange = true;
+    public void RotateThisEnemy()
+    {   
         transform.Rotate(0.0f, 0.0f, 90.0f, Space.World);
-    }
-
-    public void NotWithinRange()
-    {
-        _isWithinRange = false;
-        //transform.Rotate(0.0f, 0.0f, -90.0f, Space.World);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

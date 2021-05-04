@@ -7,10 +7,8 @@ public class StealthInterceptorShot : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
     [SerializeField] private GameObject _enemyStealthShip;
-    private float _canFire;
-
-
     [SerializeField] private float _moveSpeed;
+    private float _canFire;
 
     public float _movementType = 0;
     private bool _canSwitchMovement = true;
@@ -18,14 +16,10 @@ public class StealthInterceptorShot : MonoBehaviour
     private bool _canDoThis = false;
     private int _randomDirection;
 
-    private BoxCollider2D sneakAttackCollider;
-
-
 
     private void Start()
     {
         StartCoroutine(CalculateDirectionChange());
-        sneakAttackCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -42,10 +36,19 @@ public class StealthInterceptorShot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trying To Fire");
         if (other.tag == "Player" && _movingHorizontal)
         {
             FireStealthLaser();
+        }
+
+        if (other.tag == "Powerup")
+        {
+            int randomChanceToFire = Random.Range(0, 2);
+            if (randomChanceToFire == 0)
+            {
+                Debug.Log("Trying To Fire");
+                FireStealthLaser();
+            }
         }
     }
 
@@ -103,7 +106,6 @@ public class StealthInterceptorShot : MonoBehaviour
             _canSwitchMovement = false;
             _movingHorizontal = true;
             _canDoThis = true;
-            sneakAttackCollider.enabled = true;
             transform.Rotate(0.0f, 0.0f, 180, Space.World);
 
             for (int i = 0; i < 10; i++)

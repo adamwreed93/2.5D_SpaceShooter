@@ -11,6 +11,7 @@ TagManager:
   - HeatSeeker
   - HammerheadRange
   - Enemy_Hammerhead
+  - Powerup
   layers:
   - Default
   - TransparentFX

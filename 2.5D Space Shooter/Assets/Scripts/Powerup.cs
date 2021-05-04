@@ -4,23 +4,56 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    Player player;
+
     [SerializeField] private float _speed = 0;
     [SerializeField] private int _powerupID;
 
     [SerializeField] private AudioClip _audioClip;
 
-    private int _ammoRefill = 15;
+    [SerializeField] private Transform target;
 
+    private int _ammoRefill = 15;
+    private bool _isBeingAttractedToPlayer = false;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        target = player.transform;
+    }
 
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if (transform.position.y < -4.5f)
+        if (!_isBeingAttractedToPlayer)
         {
-            Destroy(this.gameObject);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+            if (transform.position.y < -4.5f)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            if (target != null)
+            {
+                transform.Translate(Vector3.right * _speed * Time.deltaTime);
+                transform.right = target.position - transform.position;
+            }
         }
     }
+
+    public void AttractPowerup()
+    {
+        _isBeingAttractedToPlayer = true;
+    }
+
+    public void StopAttractingPowerup()
+    {
+        _isBeingAttractedToPlayer = false;
+        transform.localEulerAngles = new Vector3(0, 0, 0);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

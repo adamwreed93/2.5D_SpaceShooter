@@ -6,6 +6,8 @@ public class Laser : MonoBehaviour
 {
     [SerializeField] private float _speed = 0;
 
+    public GameObject miniExplosionPrefab;
+
     public bool _isEnemyLaser = false;
     public bool _isStealthEnemyLaser = false;
 
@@ -79,6 +81,12 @@ public class Laser : MonoBehaviour
                 player.Damage();
                 Destroy(transform.parent.gameObject);
             }
+        }
+
+        if (other.tag == "Powerup" && _isEnemyLaser == true)
+        {
+            Instantiate(miniExplosionPrefab, other.transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
         }
     }
 }

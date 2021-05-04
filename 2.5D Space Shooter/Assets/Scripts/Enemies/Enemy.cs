@@ -4,36 +4,30 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
     [SerializeField] private int _pointValue = 10;
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
     [SerializeField] private GameObject _enemyShieldVisualizer;
+    [SerializeField] private GameObject _enemyBasicPrefab;
 
-    private float _movementType = 0; 
     private bool _isDead = false;
     private float _canFire;
-    private bool _canStartCoroutine = true;
-    private float _movementDirection;
     private bool _enemyShieldActive = false;
 
     private Animator _anim;
     private Player _player;
+    private Enemy_Movement _enemy_Movement;
     private AudioSource _audioSource;
 
 
     private void Start()
     {
+        _enemy_Movement = _enemyBasicPrefab.GetComponent<Enemy_Movement>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _isDead = false;
-
-        StartCoroutine(ChangeDirection());
         CheckForShield();
-
-
-
 
         if (_player == null)
         {
@@ -49,49 +43,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        CalculateMovement();
         FireLaser();
-    }
-
-    void CalculateMovement()
-    {
-        if (_movementType == 0)
-        {
-            transform.Translate(Vector3.down * _moveSpeed * Time.deltaTime);
-
-            if (transform.position.y <= -5f)
-            {
-                float randomX = Random.Range(-8f, 8f);
-                transform.position = new Vector3(randomX, 8, 0);
-            }
-        }
-        
-        if (_movementType == 1)
-        {
-            if (_canStartCoroutine)
-            {
-                _canStartCoroutine = false;
-                StartCoroutine(DirectHorizontalMovement());
-            }
-
-            if (_movementDirection == 0)
-            {
-                transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
-            }
-            else if (_movementDirection == 1)
-            {
-                transform.Translate(Vector3.left * _moveSpeed * Time.deltaTime);
-            }
-
-            if (transform.position.x >= 11)
-            {
-                transform.position = new Vector3(-11, transform.position.y, 0);
-            }
-            else if (transform.position.x <= -11)
-            {
-                transform.position = new Vector3(11, transform.position.y, 0);
-            }
-        }
     }
 
     private void CheckForShield()
@@ -110,31 +62,8 @@ public class Enemy : MonoBehaviour
         _enemyShieldVisualizer.SetActive(true);
     }
 
-    private IEnumerator DirectHorizontalMovement()
-    {
-        _movementDirection = Random.Range(0, 2);
 
-        while (_movementType == 1)
-        {
-            yield return new WaitForSeconds(3.0f);
-            _movementDirection = Random.Range(0, 2);
-        }
-        _canStartCoroutine = true;
-    }
-
-    private IEnumerator ChangeDirection()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3.0f);
-            if (transform.position.y >= -0.75f && transform.position.y <= 5.5f)
-            {
-                _movementType = Random.Range(0, 2);
-            }
-        }
-    }
-
-    void FireLaser()
+    public void FireLaser()
     {
         if (Time.time > _canFire && !_isDead)
         {
@@ -173,10 +102,10 @@ public class Enemy : MonoBehaviour
                 other.transform.GetComponent<Player>().Damage();
             }
             _anim.SetTrigger("OnEnemyDeath");
-            _moveSpeed = 0;
+            _enemy_Movement._moveSpeed = 0;
             _audioSource.Play();
             _isDead = true;
-            Destroy(gameObject, 2.8f);
+            Destroy(transform.parent.gameObject, 2.8f);
         }
 
         if (other.tag == "Laser")
@@ -203,11 +132,11 @@ public class Enemy : MonoBehaviour
 
                 _anim.SetTrigger("OnEnemyDeath");
                 Destroy(other.gameObject);
-                _moveSpeed = 0;
+                _enemy_Movement._moveSpeed = 0;
                 _audioSource.Play();
                 Destroy(GetComponent<Collider2D>());
                 _isDead = true;
-                Destroy(gameObject, 2.8f);
+                Destroy(transform.parent.gameObject, 2.8f);
             }
         }
 
@@ -219,12 +148,12 @@ public class Enemy : MonoBehaviour
             }
 
             _anim.SetTrigger("OnEnemyDeath");
-            _moveSpeed = 0;
+            _enemy_Movement._moveSpeed = 0;
             _audioSource.Play();
 
             Destroy(GetComponent<Collider2D>());
             _isDead = true;
-            Destroy(gameObject, 2.8f);
+            Destroy(transform.parent.gameObject, 2.8f);
         }
     }
 }

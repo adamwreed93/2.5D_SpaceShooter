@@ -9,7 +9,6 @@ public class EnemyStealthInterceptor : MonoBehaviour
     [SerializeField] private float _fireRate = 3.0f;
     [SerializeField] private GameObject _enemyStealthInterceptorPrefab;
     [SerializeField] private GameObject explosionPrefab;
-    [SerializeField] private float _moveSpeed;
 
     private bool _isDead = false;
     private float _canFire;

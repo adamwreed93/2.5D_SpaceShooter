@@ -12,6 +12,8 @@ public class HammerheadMovement : MonoBehaviour
     private Player _player;
     private Transform target;
 
+    public bool _isWithinRange = false;
+
     [SerializeField] private GameObject explosionPrefab;
 
 
@@ -40,7 +42,7 @@ public class HammerheadMovement : MonoBehaviour
 
     void CalculateMovement()
     {
-        if (_enemyHammerhead != null && _enemyHammerhead._isWithinRange)
+        if (_enemyHammerhead != null && _isWithinRange)
         {
             transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
             transform.right = target.position - transform.position;
@@ -61,7 +63,8 @@ public class HammerheadMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            _enemyHammerhead.WithinRange();
+            _enemyHammerhead.RotateThisEnemy();
+            _isWithinRange = true;
         }
     }
 
@@ -70,7 +73,7 @@ public class HammerheadMovement : MonoBehaviour
         if (other.tag == "Player")
         {
             transform.localEulerAngles = new Vector3(0, 0, 0);
-            _enemyHammerhead.NotWithinRange();
+            _isWithinRange = false;
         }
     }
 
