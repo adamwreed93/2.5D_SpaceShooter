@@ -8,7 +8,7 @@ public class PlayerPowerupDetector : MonoBehaviour
 
     private bool _isWithinRange = false;
     private bool _isAttractingPowerup = false;
-    [SerializeField] private bool _outOfRange = true;
+    private bool _outOfRange = true;
 
     public List<Powerup> powerupsWithinRange = new List<Powerup>(); //This list will hold all powerups that are within the players detection range collider.
 
@@ -45,7 +45,7 @@ public class PlayerPowerupDetector : MonoBehaviour
         {
             powerup = other.GetComponent<Powerup>();
 
-            if (other.GetComponent<Powerup>() != null)
+            if (other != null)
             {
                 powerupsWithinRange.Add(powerup);
             }
@@ -59,7 +59,7 @@ public class PlayerPowerupDetector : MonoBehaviour
         if (other.tag == "Powerup")
         {
             powerup = other.GetComponent<Powerup>();
-            if (other.GetComponent<Powerup>() != null)
+            if (other != null)
             {
                 powerupsWithinRange.Remove(powerup);
             }

@@ -9,8 +9,10 @@ public class Enemy_Movement : MonoBehaviour
     private float _movementType = 0;
     private bool _canStartCoroutine = true;
     private float _movementDirection;
+    private int _dodging = 0;
 
     [SerializeField] private GameObject _enemyChildPrefab;
+    [SerializeField] private bool _canDodge;
 
     private Enemy _enemy;
     private Player _player;
@@ -31,7 +33,15 @@ public class Enemy_Movement : MonoBehaviour
 
     void Update()
     {
-        CalculateMovement();
+        if (_dodging == 0)
+        {
+            CalculateMovement();
+        }
+        else if (_dodging == 1 || _dodging == 2)
+        {
+            Dodge();
+            StartCoroutine(EndDodge());
+        }
     }
 
     void CalculateMovement()
@@ -110,5 +120,37 @@ public class Enemy_Movement : MonoBehaviour
                 _enemy.FireLaser();
             }
         }
+
+        if (other.tag == "Laser" && _canDodge)
+        {
+            Laser lasers = other.transform.GetComponentInChildren<Laser>();
+
+            if (!lasers._isEnemyLaser)
+            {
+                _dodging = 1;
+                //Can add "_canDodge = false;" here to make the enemies less capable dodgers. [Part 1]
+             }
+        }
+    }
+
+    private void Dodge()
+    {
+        if (_dodging == 1)
+        {
+            transform.Translate(Vector3.right * (_moveSpeed * 2) * Time.deltaTime);
+        }
+        else if (_dodging == 2)
+        {
+            transform.Translate(Vector3.left * (_moveSpeed * 2) * Time.deltaTime);
+        }
+    }
+
+    private IEnumerator EndDodge()
+    { 
+        yield return new WaitForSeconds(.5f);
+        _dodging = 2;
+        yield return new WaitForSeconds(.5f);
+        _dodging = 0;
+        //Can add "_canDodge = true;" here to make the enemies less capable dodgers. [Part 2]
     }
 }
