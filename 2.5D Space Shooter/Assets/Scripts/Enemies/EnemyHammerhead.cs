@@ -48,7 +48,7 @@ public class EnemyHammerhead : MonoBehaviour
                     _player.AddScore(_pointValue);
                 }
                 Destroy(other.gameObject);
-                hammerheadMovement.TouchedLaser();
+                hammerheadMovement.KilledByPlayer();
             }
 
 
@@ -58,8 +58,23 @@ public class EnemyHammerhead : MonoBehaviour
                 {
                     _player.AddScore(_pointValue);
                 }
-                hammerheadMovement.TouchedSuperBeam();
+                hammerheadMovement.KilledByPlayer();
             }
+        }
+
+        if (other.tag == "SuperMissile")
+        {
+
+
+            if (_player != null)
+            {
+                _player.AddScore(_pointValue);
+            }
+
+            hammerheadMovement.KilledByPlayer();
+            Destroy(transform.GetChild(0).gameObject);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(transform.parent.gameObject, 2.8f);
         }
     }
 }

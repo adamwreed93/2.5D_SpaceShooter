@@ -89,6 +89,9 @@ public class Powerup : MonoBehaviour
                     case 6:
                         player.SuperBeamActive(); //Rare Spawn
                         break;
+                    case 7:
+                        player.SuperMissileActive(); //Rare Spawn
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

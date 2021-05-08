@@ -124,7 +124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6597806594973836147}
   - component: {fileID: 6597806594973836150}
-  - component: {fileID: 6597806594973836149}
   - component: {fileID: 4384212735938976618}
   m_Layer: 0
   m_Name: Enemy_StealthInterceptor
@@ -140,7 +139,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6597806594973836146}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 12.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -174,27 +173,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.7260442, y: 7.8216763}
   m_EdgeRadius: 0
---- !u!50 &6597806594973836149
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6597806594973836146}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &4384212735938976618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3812606f56e56ab42b551ccc30849a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyLaserPrefab: {fileID: 255261430704948209, guid: e8ad424f83963044f94cd0fc41c330c5, type: 3}
+  _enemyLaserPrefab: {fileID: 255261430704948209, guid: afd606e0908c6624f93db8df1fc21dbb, type: 3}
   _fireRate: 3
   _enemyStealthShip: {fileID: 6597806595671415401}
   _moveSpeed: 6
@@ -403,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pointValue: 10
-  _enemyLaserPrefab: {fileID: 255261430704948209, guid: e8ad424f83963044f94cd0fc41c330c5, type: 3}
+  _enemyLaserPrefab: {fileID: 255261430704948209, guid: afd606e0908c6624f93db8df1fc21dbb, type: 3}
   _fireRate: 3
   _enemyStealthInterceptorPrefab: {fileID: 6597806594973836146}
   explosionPrefab: {fileID: 3704474712665167732, guid: e055c062429d5a24c95922a4c19b544f, type: 3}

@@ -12,6 +12,7 @@ TagManager:
   - HammerheadRange
   - Enemy_Hammerhead
   - Powerup
+  - SuperMissile
   layers:
   - Default
   - TransparentFX

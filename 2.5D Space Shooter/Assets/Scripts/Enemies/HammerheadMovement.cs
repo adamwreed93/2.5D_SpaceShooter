@@ -86,24 +86,4 @@ public class HammerheadMovement : MonoBehaviour
         Destroy(GetComponent<Collider2D>());
         Destroy(gameObject, 2.8f);
     }
-
-    public void TouchedLaser()
-    {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        _moveSpeed = 0;
-        _audioSource.Play();
-        Destroy(GetComponent<Collider2D>());
-        Destroy(transform.GetChild(0).gameObject);
-        Destroy(gameObject, 2.8f);
-    }
-
-    public void TouchedSuperBeam()
-    {
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        _moveSpeed = 0;
-        _audioSource.Play();
-        Destroy(transform.GetChild(0).gameObject);
-        Destroy(GetComponent<Collider2D>());
-        Destroy(gameObject, 2.8f);
-    }
 }

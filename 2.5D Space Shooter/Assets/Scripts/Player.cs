@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _superBeamPrefab;
+    [SerializeField] private GameObject _superMissilePrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngine, _rightEngine; //Similar references like this can be written like this but you hjave to be careful. This is more ofr organizational purposes.
     [SerializeField] private AudioClip _laserSoundClip;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     private bool _isShieldActive = false;
     private bool _isSuperBeamActive = false;
+    private bool _isSuperMissileActive = false;
     private bool _isThrusterActive = false;
     private bool _isNegaShroomActive = false;
     private float _defaultSpeed;
@@ -86,9 +88,13 @@ public class Player : MonoBehaviour
         Movement();
         Thrusters();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0 && !_isSuperBeamActive)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && _ammoCount > 0 && !_isSuperBeamActive && !_isSuperMissileActive)
         {
             FireLaser();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire && !_isSuperBeamActive && _isSuperMissileActive)
+        {
+            FireMissile();
         }
     }
 
@@ -135,7 +141,11 @@ public class Player : MonoBehaviour
         _audioSource.Play();
     }
 
-
+    void FireMissile()
+    {
+        _canFire = Time.time + (_fireRate * 3);
+        Instantiate(_superMissilePrefab, new Vector3(transform.position.x, (transform.position.y + 1.5f), transform.position.z), Quaternion.identity);
+    }
 
     public void Damage()
     {
@@ -176,6 +186,12 @@ public class Player : MonoBehaviour
         StartCoroutine(SuperBeamPowerDownRoutine());
     }
 
+    public void SuperMissileActive()
+    {
+        _isSuperMissileActive = true;
+        StartCoroutine(SuperMissilePowerDownRoutine());
+    }
+
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
@@ -206,6 +222,7 @@ public class Player : MonoBehaviour
         _isTripleShotActive = false;
     }
 
+    
     private IEnumerator SuperBeamPowerDownRoutine()
     {
         _superBeamPrefab.SetActive(true);
@@ -218,6 +235,12 @@ public class Player : MonoBehaviour
         superBeamCollider.offset = new Vector3(0, 0, 0);
         _isSuperBeamActive = false;
         _superBeamPrefab.SetActive(false);
+    }
+
+    private IEnumerator SuperMissilePowerDownRoutine()
+    {
+        yield return new WaitForSeconds(20.0f);
+        _isSuperMissileActive = false;
     }
 
     private IEnumerator SpeedPowerDownRoutine()

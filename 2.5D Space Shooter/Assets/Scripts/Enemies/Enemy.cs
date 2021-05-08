@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemy_Movement = _enemyBasicPrefab.GetComponent<Enemy_Movement>();
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _anim = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _isDead = false;
@@ -151,6 +151,30 @@ public class Enemy : MonoBehaviour
             _enemy_Movement._moveSpeed = 0;
             _audioSource.Play();
 
+            Destroy(GetComponent<Collider2D>());
+            _isDead = true;
+            Destroy(transform.parent.gameObject, 2.8f);
+        }
+
+        if (other.tag == "SuperMissile")
+        {
+            if (_enemyShieldActive)
+            {
+                Destroy(other.gameObject);
+                _enemyShieldActive = false;
+                _enemyShieldVisualizer.SetActive(false);
+                return;
+            }
+
+            if (_player != null)
+            {
+                _player.AddScore(_pointValue);
+            }
+
+            _anim.SetTrigger("OnEnemyDeath");
+            _enemy_Movement._moveSpeed = 0;
+            _audioSource.Play();
+            Destroy(other.gameObject);
             Destroy(GetComponent<Collider2D>());
             _isDead = true;
             Destroy(transform.parent.gameObject, 2.8f);

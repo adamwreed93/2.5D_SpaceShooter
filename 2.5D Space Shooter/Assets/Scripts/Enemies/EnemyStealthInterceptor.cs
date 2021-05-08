@@ -110,5 +110,22 @@ public class EnemyStealthInterceptor : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
             Destroy(transform.parent.gameObject, 2.8f);
         }
+
+        if (other.tag == "SuperMissile")
+        {
+           
+
+            if (_player != null)
+            {
+                _player.AddScore(_pointValue);
+            }
+
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            stealthInterceptorShot.StopMovement();
+            _audioSource.Play();
+            Destroy(transform.GetChild(0).gameObject);
+            Destroy(GetComponent<Collider2D>());
+            Destroy(transform.parent.gameObject, 2.8f);
+        }
     }
 }

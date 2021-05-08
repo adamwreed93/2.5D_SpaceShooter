@@ -119,8 +119,7 @@ public class SpawnManager : MonoBehaviour
 
     private void rarePowerupUpSpawn() //10% Chance To Spawn
     {
-        randomPowerupID = 6;
-        //randomPowerupID = Random.Range(7, 7);
+        randomPowerupID = Random.Range(6, 8);
     }
 
 

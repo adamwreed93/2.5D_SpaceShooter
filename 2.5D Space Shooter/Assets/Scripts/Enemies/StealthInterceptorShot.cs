@@ -46,7 +46,6 @@ public class StealthInterceptorShot : MonoBehaviour
             int randomChanceToFire = Random.Range(0, 2);
             if (randomChanceToFire == 0)
             {
-                Debug.Log("Trying To Fire");
                 FireStealthLaser();
             }
         }
