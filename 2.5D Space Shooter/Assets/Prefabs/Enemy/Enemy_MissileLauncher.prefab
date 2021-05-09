@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 2
-  _pointValue: 10
+  _pointValue: 20
   _HeatSeekingMissilePrefab: {fileID: 7868696176931077693, guid: 80859dfd37652da47aeadb6f6ff0381f, type: 3}
 --- !u!1 &3072474215460697931
 GameObject:

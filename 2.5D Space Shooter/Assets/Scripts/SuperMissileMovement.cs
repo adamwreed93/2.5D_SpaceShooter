@@ -40,7 +40,11 @@ public class SuperMissileMovement : MonoBehaviour
     private void EnemyMissileMovement()
     {
         transform.Translate(Vector3.up * _movementSpeed * Time.deltaTime);
-        transform.up = target.position - transform.position;
+
+        if (target != null)
+        {
+            transform.up = target.position - transform.position;
+        }
     }
 
     private void PlayerMissileMovement()
@@ -48,7 +52,11 @@ public class SuperMissileMovement : MonoBehaviour
         if (target != null)
         {
             transform.Translate(Vector3.right * _movementSpeed * Time.deltaTime);
-            transform.right = target.position - transform.position;
+
+            if (target != null)
+            {
+                transform.right = target.position - transform.position;
+            }
         }
         else
         {
@@ -61,15 +69,12 @@ public class SuperMissileMovement : MonoBehaviour
         if (other.tag == "Enemy" && _isPlayerMissile)
         {
             enemy = other.GetComponent<Enemy>();
-            Debug.Log("Checkpoint 1");
             if (other != null)
             {
-                Debug.Log("Checkpoint 2");
                 enemiesWithinRange.Add(enemy);
 
                 if (target == null)
                 {
-                    Debug.Log("Checkpoint 3");
                     target = enemiesWithinRange[0].transform;
                 }
             }

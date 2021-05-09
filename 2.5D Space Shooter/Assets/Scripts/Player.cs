@@ -43,8 +43,6 @@ public class Player : MonoBehaviour
     
 
 
-
-
     void Start()
     {
         _defaultSpeed = _speed;
@@ -239,7 +237,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator SuperMissilePowerDownRoutine()
     {
-        yield return new WaitForSeconds(20.0f);
+        yield return new WaitForSeconds(7.0f);
         _isSuperMissileActive = false;
     }
 
@@ -335,6 +333,14 @@ public class Player : MonoBehaviour
             {
                 break;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Boss_SuperBeam")
+        {
+            Damage();
         }
     }
 }

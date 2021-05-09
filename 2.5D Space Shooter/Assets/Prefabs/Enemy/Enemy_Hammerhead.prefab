@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHammerheadPrefab: {fileID: 8587172837413048396}
-  _pointValue: 10
+  _pointValue: 20
 --- !u!1 &6958100917047345850
 GameObject:
   m_ObjectHideFlags: 0

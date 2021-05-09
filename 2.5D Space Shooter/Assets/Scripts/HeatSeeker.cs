@@ -8,6 +8,8 @@ public class HeatSeeker : MonoBehaviour
 
     public GameObject miniExplosionPrefab;
 
+    [SerializeField] private bool _isPlayerMissile;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -20,22 +22,28 @@ public class HeatSeeker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !_isPlayerMissile)
         {
             if (player != null)
             {
                 player.Damage();
             }
-            Destroy(transform.parent.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
 
         if (other.tag == "Laser")
         {
             Instantiate(miniExplosionPrefab, transform.position, Quaternion.identity);
-            Destroy(transform.parent.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
 
         if (other.tag == "SuperBeam")
+        {
+            Instantiate(miniExplosionPrefab, transform.position, Quaternion.identity);
+            Destroy(transform.parent.gameObject);
+        }
+
+        if (other.tag == "Boss")
         {
             Instantiate(miniExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(transform.parent.gameObject);

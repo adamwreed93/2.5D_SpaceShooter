@@ -8,7 +8,7 @@ public class EnemyStealthInterceptor : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     [SerializeField] private float _fireRate = 3.0f;
     [SerializeField] private GameObject _enemyStealthInterceptorPrefab;
-    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private GameObject _explosionPrefab;
 
     private bool _isDead = false;
     private float _canFire;
@@ -67,7 +67,7 @@ public class EnemyStealthInterceptor : MonoBehaviour
             {
                 other.transform.GetComponent<Player>().Damage();
             }
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             stealthInterceptorShot.StopMovement();
             _audioSource.Play();
             Destroy(transform.GetChild(0).gameObject);
@@ -85,7 +85,7 @@ public class EnemyStealthInterceptor : MonoBehaviour
                     _player.AddScore(_pointValue);
                 }
 
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
                 Destroy(other.gameObject);
                 stealthInterceptorShot.StopMovement();
                 _audioSource.Play();
@@ -103,7 +103,7 @@ public class EnemyStealthInterceptor : MonoBehaviour
                 _player.AddScore(_pointValue);
             }
 
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             stealthInterceptorShot.StopMovement();
             _audioSource.Play();
             Destroy(transform.GetChild(0).gameObject);
@@ -120,7 +120,7 @@ public class EnemyStealthInterceptor : MonoBehaviour
                 _player.AddScore(_pointValue);
             }
 
-            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             stealthInterceptorShot.StopMovement();
             _audioSource.Play();
             Destroy(transform.GetChild(0).gameObject);

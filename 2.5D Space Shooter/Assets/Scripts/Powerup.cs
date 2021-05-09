@@ -15,6 +15,9 @@ public class Powerup : MonoBehaviour
 
     private int _ammoRefill = 15;
     private bool _isBeingAttractedToPlayer = false;
+    private int _commonPointValue = 10;
+    private int _uncommonPointValue = 20;
+    private int _rarePointValue = 40;
 
     private void Start()
     {
@@ -68,29 +71,37 @@ public class Powerup : MonoBehaviour
                 {
                     case 0:
                         player.TripleShotActive(); //Common Spawn
+                        player.AddScore(_commonPointValue);
                         break;
                     case 1:
                         player.SpeedBoostActive(); //Common Spawn
+                        player.AddScore(_commonPointValue);
                         break;
                     case 2:
                         player.RefillAmmo(_ammoRefill); //Common Spawn
+                        player.AddScore(_commonPointValue);
                         break;
                  /////////////////////////////////////////////////////////////////////////
                     case 3:
                         player.ShieldActive(); //Uncommon Spawn
+                        player.AddScore(_uncommonPointValue);
                         break; 
                     case 4:
                         player.RestoreHealth(); //Uncommon Spawn
+                        player.AddScore(_uncommonPointValue);
                         break;
                     case 5:
                         player.NegaShroomActive(); //Uncommon Spawn
+                        player.AddScore(_uncommonPointValue);
                         break;
                  ///////////////////////////////////////////////////////////////////////
                     case 6:
                         player.SuperBeamActive(); //Rare Spawn
+                        player.AddScore(_rarePointValue);
                         break;
                     case 7:
                         player.SuperMissileActive(); //Rare Spawn
+                        player.AddScore(_rarePointValue);
                         break;
                     default:
                         Debug.Log("Default Value");

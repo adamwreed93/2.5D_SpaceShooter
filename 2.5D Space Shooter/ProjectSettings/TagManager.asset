@@ -13,6 +13,8 @@ TagManager:
   - Enemy_Hammerhead
   - Powerup
   - SuperMissile
+  - Boss
+  - Boss_SuperBeam
   layers:
   - Default
   - TransparentFX

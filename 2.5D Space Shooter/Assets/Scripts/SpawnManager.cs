@@ -10,13 +10,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _hammerheadEnemyPrefab;
     [SerializeField] private GameObject _stealthEnemyPrefab;
     [SerializeField] private GameObject _dodgerEnemyPrefab;
+    [SerializeField] private GameObject _bossEnemyPrefab;
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private float spawnRate;
-
     [SerializeField] private GameObject _newWaveText;
     [SerializeField] private Text _newWaveCountdownText;
     [SerializeField] private GameObject _newWaveCountdownObject;
+
+    private UIManager _uiManager;
 
     private int _basicEnemiesSpawnCount = 5; //The first wave starts with 5 enemies.
     private int _missileEnemiesSpawnCount = 1;
@@ -24,23 +26,28 @@ public class SpawnManager : MonoBehaviour
     private int _hammerheadEnemiesSpawnCount = 1;
     private int _stealthEnemiesSpawnCount = 1;
     private bool _stopSpawning = false;
-    private int _waveNumber = 1; //This will eventually need to be put into the UI as an image.
+    [SerializeField] private int _waveNumber = 1;
     private bool _spawnedMissileEnemies = false;
     private bool _spawnedHammerheadEnemies = false;
     private bool _spawnedStealthEnemies = false;
     private bool _spawnedDodgerEnemies = false;
+    private bool _isFighitngBoss = false;
 
     private int _randomPowerup;
     private int randomPowerupID;
 
+    private void Start()
+    {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    }
 
-    public void StartSpawning() //Called when you shoot the asteroid.
+    public void StartSpawning() //Called when you shoot the asteroid, or when you start a new wave.
     {
         StartCoroutine(SpawnBasicEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(NewWaveManager());
 
-        if (_waveNumber > 5 && !_spawnedMissileEnemies) //If you don't chack for _spawnedMissileEnemies then it will always spawn them.
+        if (_waveNumber > 5 && !_spawnedMissileEnemies)
         {
             int random = Random.Range(0, 2);
             if (random == 1)
@@ -50,7 +57,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (_waveNumber > 3 && !_spawnedHammerheadEnemies) //If you don't chack for _spawnedHammerheadEnemies then it will always spawn them.
+        if (_waveNumber > 3 && !_spawnedHammerheadEnemies)
         {
             int random = Random.Range(0, 2);
             if (random == 1)
@@ -60,7 +67,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (_waveNumber > 4 && !_spawnedStealthEnemies) //If you don't chack for _spawnedStealthEnemies then it will always spawn them.
+        if (_waveNumber > 4 && !_spawnedStealthEnemies)
         {
             int random = Random.Range(0, 2);
             if (random == 1)
@@ -70,7 +77,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-        if (_waveNumber > 2 && !_spawnedDodgerEnemies) //If you don't chack for _spawnedStealthEnemies then it will always spawn them.
+        if (_waveNumber > 2 && !_spawnedDodgerEnemies)
         {
             int random = Random.Range(0, 2);
             if (random == 1)
@@ -78,6 +85,11 @@ public class SpawnManager : MonoBehaviour
                 _spawnedDodgerEnemies = true;
                 StartCoroutine(SpawnDodgerEnemyRoutine());
             }
+        }
+
+        if (_waveNumber == 5 || _waveNumber == 10)
+        {
+            _isFighitngBoss = true;
         }
     }
 
@@ -214,6 +226,16 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private void SpawnBoss()
+    {
+        Vector3 posToSpawn = new Vector3(0, 8.5f, 0);
+        GameObject newEnemy = Instantiate(_bossEnemyPrefab, posToSpawn, Quaternion.identity);
+        newEnemy.transform.parent = _enemyContainer.transform;
+        _isFighitngBoss = false;
+        StartCoroutine(NewWaveManager());
+    }
+
+
     private IEnumerator NewWaveManager()
     {
         yield return new WaitForSeconds(6f);
@@ -221,13 +243,23 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.1f);
         }
-        _stopSpawning = true;
-        StartCoroutine(StartNewWave());
+
+        if (!_isFighitngBoss)
+        {
+            _stopSpawning = true;
+            StartCoroutine(StartNewWave());
+        }
+        else
+        {
+            SpawnBoss();
+        }
     }
 
     private IEnumerator StartNewWave()
     {
         _waveNumber++;
+        _uiManager.UpdateWaveCount(_waveNumber);
+
         int waitTime = 4;
 
         for (int i = 0; i < waitTime; i++)
@@ -277,4 +309,6 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
     }
+
+
 }

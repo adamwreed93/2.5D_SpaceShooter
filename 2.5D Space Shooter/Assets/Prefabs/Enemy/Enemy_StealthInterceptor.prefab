@@ -380,11 +380,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1da35769b7a7644b3a67093e19625f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValue: 10
+  _pointValue: 25
   _enemyLaserPrefab: {fileID: 255261430704948209, guid: afd606e0908c6624f93db8df1fc21dbb, type: 3}
   _fireRate: 3
   _enemyStealthInterceptorPrefab: {fileID: 6597806594973836146}
-  explosionPrefab: {fileID: 3704474712665167732, guid: e055c062429d5a24c95922a4c19b544f, type: 3}
+  _explosionPrefab: {fileID: 3704474712665167732, guid: e055c062429d5a24c95922a4c19b544f, type: 3}
 --- !u!1 &6597806595841117274
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _restartText;
     [SerializeField] private Text _ammoCountText;
     [SerializeField] private Text _thrusterFuelText;
+    [SerializeField] private Text _waveCountText;
 
     private GameManager _gameManager;
 
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
         _ammoCountText.text = "Ammo Count: " + 15;
         _thrusterFuelText.text = "Fuel: " + 100 + "%";
         _scoreText.text = "Score: " + 0;
+        _waveCountText.text = "Wave: " + 1;
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -32,6 +34,11 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+
+    public void UpdateWaveCount(int waveCount)
+    {
+        _waveCountText.text = "Wave: " + waveCount.ToString();
     }
 
     public void UpdateAmmoCount(int playerAmmo)

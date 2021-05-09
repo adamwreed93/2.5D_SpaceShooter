@@ -112,11 +112,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2882339611350071965}
   - component: {fileID: 2882339611350071964}
-  - component: {fileID: 4084944095215731787}
+  - component: {fileID: 896160201}
+  - component: {fileID: 5000583429251236630}
   - component: {fileID: 2638962465514607591}
   m_Layer: 0
   m_Name: GFX
-  m_TagString: Untagged
+  m_TagString: SuperMissile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,8 +188,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &4084944095215731787
-CircleCollider2D:
+--- !u!50 &896160201
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882339611350071955}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &5000583429251236630
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -200,9 +222,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000027130312, y: -2.2758558}
-  serializedVersion: 2
-  m_Radius: 31.48813
+  m_Offset: {x: -0.082417004, y: -0.15268344}
+  m_Size: {x: 5.7127757, y: 3.5100775}
+  m_Direction: 1
 --- !u!114 &2638962465514607591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4caa882aec52b418e1473ead4ac6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  miniExplosionPrefab: {fileID: 0}
+  miniExplosionPrefab: {fileID: 6982445704510370719, guid: 0a96a71177af3d04aa800f645e698fed, type: 3}
+  _isPlayerMissile: 1
 --- !u!1 &7779819220101531363
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,12 +248,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9047007080482360038}
-  - component: {fileID: 9133053726547199733}
-  - component: {fileID: 9133053726547199730}
+  - component: {fileID: 1741541474}
+  - component: {fileID: 3955647484031658195}
   - component: {fileID: 4466427261452543568}
   m_Layer: 0
   m_Name: SuperMissile
-  m_TagString: SuperMissile
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,7 +273,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!50 &9133053726547199733
+--- !u!50 &1741541474
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -264,15 +287,15 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &9133053726547199730
-CapsuleCollider2D:
+--- !u!58 &3955647484031658195
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -284,9 +307,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.038605332, y: -0.19302526}
-  m_Size: {x: 3.309057, y: 5.9305315}
-  m_Direction: 0
+  m_Offset: {x: 0.00000027130312, y: -2.2758558}
+  serializedVersion: 2
+  m_Radius: 31.48813
 --- !u!114 &4466427261452543568
 MonoBehaviour:
   m_ObjectHideFlags: 0
