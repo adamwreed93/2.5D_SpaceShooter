@@ -40,7 +40,7 @@ public class Powerup : MonoBehaviour
         {
             if (target != null)
             {
-                transform.Translate(Vector3.right * _speed * Time.deltaTime);
+                transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
                 transform.right = target.position - transform.position;
             }
         }
